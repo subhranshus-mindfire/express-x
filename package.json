@@ -1,0 +1,36 @@
+{
+  "name": "express-x",
+  "version": "1.0.0",
+  "description": "A configurable Express.js security middleware package with best practices.",
+  "main": "src/index.js",
+  "bin": {
+    "express-x": "./bin/cli.js"
+  },
+  "keywords": [
+    "express",
+    "security",
+    "nodejs",
+    "api",
+    "jwt",
+    "helmet",
+    "csrf"
+  ],
+  "author": "Subhranshu Sahoo",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "csurf": "^1.11.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.2.0",
+    "express-validator": "^7.1.0",
+    "helmet": "^7.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "winston": "^3.10.0"
+  },
+  "devDependencies": {
+    "chalk": "^5.3.0",
+    "inquirer": "^9.2.12"
+  }
+}
