@@ -17,5 +17,5 @@ module.exports = {
     } catch (err) {
       res.status(403).json({ error: "Forbidden" });
     }
-  },
+  }
 };

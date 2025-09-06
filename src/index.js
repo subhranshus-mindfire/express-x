@@ -9,15 +9,17 @@ const inputValidationMiddleware = require("./middlewares/inputValidation");
 const jwtMiddleware = require("./middlewares/jwt");
 const loggerMiddleware = require("./middlewares/logger");
 const csrfMiddleware = require("./middlewares/csrf");
+const defaultConfig = require("./defaultConfig");
+const { createLogger } = require("winston");
+
 
 module.exports = (app, userConfig = {}) => {
   const configPath = path.join(process.cwd(), "express-secure-x.json");
-  let config = userConfig;
 
   if (fs.existsSync(configPath)) {
     try {
       const fileConfig = JSON.parse(fs.readFileSync(configPath, "utf-8"));
-      config = { ...config, ...fileConfig };
+      config = { ...defaultConfig, ...fileConfig, ...userConfig };
     } catch (err) {
       console.error("Error reading express-secure-x.json", err);
     }
