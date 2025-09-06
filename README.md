@@ -1,27 +1,27 @@
-# 🔐 express-x
+# express-x
 
 A plug-and-play **security middleware package** for Node.js + Express REST APIs.  
 Protect your app with **JWT authentication, Helmet, CSRF protection, Rate Limiting, Secure Cookies, File Uploads, Logging, and more** — all configurable via CLI or JSON.
 
 ---
 
-## ✨ Features
+## Features
 
-- 🛡 **Helmet** → Secure HTTP headers  
-- 🔑 **JWT Authentication** → Easy token-based auth  
-- 🔒 **Secure Sessions & Cookies** → `httpOnly`, `secure`, signed cookies  
-- 📉 **Rate Limiting** → Prevent brute-force attacks  
-- 🧹 **Input Validation & Sanitization** → Prevent injections  
-- 🧾 **Logging** → Centralized request & error logging with Winston/Morgan  
-- ⚔️ **CSRF Protection** → Mitigate cross-site request forgery  
-- 🗂 **File Upload Security** → Size/type validation & upload safety  
-- 🌍 **CORS Management** → Fine-grained cross-origin configuration  
-- 🛠 **Custom Error Handling** → Hide stack traces in production  
-- ⚡ **CLI Tool** → Quickly set up a `.secure-config.json` for your app  
+- Helmet → Secure HTTP headers  
+- JWT Authentication → Easy token-based auth  
+- Secure Sessions & Cookies → `httpOnly`, `secure`, signed cookies  
+- Rate Limiting → Prevent brute-force attacks  
+- Input Validation & Sanitization → Prevent injections  
+- Logging → Centralized request & error logging with Winston/Morgan  
+- CSRF Protection → Mitigate cross-site request forgery  
+- File Upload Security → Size/type validation & upload safety  
+- CORS Management → Fine-grained cross-origin configuration  
+- Custom Error Handling → Hide stack traces in production  
+- CLI Tool → Quickly set up a `.secure-config.json` for your app  
 
 ---
 
-## 🚀 Installation
+## Installation
 
 ```bash
 npm install express-x
@@ -35,7 +35,7 @@ yarn add express-x
 
 ---
 
-## ⚡ Quick Usage
+## Quick Usage
 
 ```js
 const express = require("express");
@@ -46,14 +46,14 @@ const app = express();
 // Apply selected security features
 secure(app);
 
-app.get("/", (req, res) => res.send("Hello Secure API 🚀"));
+app.get("/", (req, res) => res.send("Hello Secure API"));
 
 app.listen(3000, () => console.log("Server running on http://localhost:3000"));
 ```
 
 ---
 
-## 🛠 CLI Setup
+## CLI Setup
 
 Run the initializer to configure security features interactively:
 
@@ -88,7 +88,7 @@ A `.secure-config.json` file will be generated in your project root:
 
 ---
 
-## 🔑 JWT Example
+## JWT Example
 
 ```js
 const { generateToken, verifyToken } = require("express-x/jwt");
@@ -103,7 +103,7 @@ console.log(payload); // { userId: 123 }
 
 ---
 
-## 📉 Rate Limiting Example
+## Rate Limiting Example
 
 ```js
 const { rateLimiter } = require("express-x/middlewares");
@@ -113,7 +113,7 @@ app.use(rateLimiter); // defaults: 100 requests per 15 min
 
 ---
 
-## 📦 Environment Variables
+## Environment Variables
 
 Set these in your `.env`:
 
@@ -126,7 +126,7 @@ NODE_ENV=production
 
 ---
 
-## 🧪 Scripts
+## Scripts
 
 ```bash
 # Run linter
@@ -138,19 +138,19 @@ npm run test
 
 ---
 
-## 📜 License
+## License
 
 MIT © [Subhranshu Sahoo](https://github.com/subhranshus-mindfire)
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
-Pull requests are welcome!  
+Pull requests are welcome.  
 For major changes, please open an issue first to discuss what you’d like to change.  
 
 ---
 
-## ⭐ Support
+## Support
 
-If you find this project useful, consider giving it a **star on GitHub** 🌟  
+If you find this project useful, consider giving it a **star on GitHub**.
