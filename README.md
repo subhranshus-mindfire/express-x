@@ -42,7 +42,6 @@ const secure = require("express-secure-x");
 
 const app = express();
 
-// Apply security features (auto-configured from JSON if present)
 secure(app);
 
 app.get("/", (req, res) => res.send("Hello Secure API"));
@@ -144,18 +143,6 @@ RATE_LIMIT_WINDOW_MS=900000
 RATE_LIMIT_MAX=100
 LOG_LEVEL=info
 JWT_EXPIRES_IN=1h
-```
-
----
-
-## Scripts
-
-```bash
-# Run linter
-npm run lint
-
-# Run tests
-npm run test
 ```
 
 ---
