@@ -1,20 +1,44 @@
 {
-  "name": "express-x",
+  "name": "express-secure-x",
   "version": "1.0.0",
-  "description": "A configurable Express.js security middleware package with best practices.",
+  "description": "A plug-and-play security middleware package for Express.js APIs with JWT, Helmet, CSRF protection, rate limiting, secure cookies, logging, and more.",
   "main": "src/index.js",
+  "types": "src/index.d.ts",
   "bin": {
     "express-x": "./bin/cli.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "start": "node src/index.js",
+    "lint": "eslint .",
+    "test": "node test/index.test.js"
   },
   "keywords": [
     "express",
     "security",
+    "middleware",
     "nodejs",
     "api",
     "jwt",
     "helmet",
-    "csrf"
+    "csrf",
+    "rate-limiting",
+    "xss",
+    "secure-cookies"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/subhranshus-mindfire/express-x.git"
+  },
+  "bugs": {
+    "url": "https://github.com/subhranshus-mindfire/express-x/issues"
+  },
+  "homepage": "https://github.com/subhranshus-mindfire/express-x#readme",
   "author": "Subhranshu Sahoo",
   "license": "MIT",
   "dependencies": {
@@ -27,10 +51,14 @@
     "helmet": "^7.0.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
-    "winston": "^3.10.0"
-  },
-  "devDependencies": {
+    "winston": "^3.10.0",
     "chalk": "^5.3.0",
     "inquirer": "^9.2.12"
+  },
+  "devDependencies": {
+    "eslint": "^9.9.0"
+  },
+  "engines": {
+    "node": ">=16"
   }
 }
