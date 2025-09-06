@@ -1,6 +1,6 @@
 {
   "name": "express-secure-x",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A plug-and-play security middleware package for Express.js APIs with JWT, Helmet, CSRF protection, rate limiting, secure cookies, logging, and more.",
   "main": "src/index.js",
   "types": "src/index.d.ts",
