@@ -1,20 +1,21 @@
 const jwt = require("jsonwebtoken");
 
-module.exports = (app) => {
-  app.use((req, res, next) => {
-    if (req.path.startsWith("/auth")) return next();
+const secret = process.env.JWT_SECRET || "default_jwt_secret";
 
+module.exports = {
+  generateToken: (payload, expiresIn = "1h") => jwt.sign(payload, secret, { expiresIn }),
+  verifyToken: (token) => jwt.verify(token, secret),
+  middleware: () => (req, res, next) => {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
 
-    if (!token) return res.sendStatus(401);
+    if (!token) return res.status(401).json({ error: "Unauthorized" });
 
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-      if (err) return res.sendStatus(403);
-      req.user = user;
+    try {
+      req.user = jwt.verify(token, secret);
       next();
-    });
-  });
-
-  console.log("JWT Authentication enabled");
+    } catch (err) {
+      res.status(403).json({ error: "Forbidden" });
+    }
+  },
 };

@@ -1,19 +1,19 @@
 const session = require("express-session");
-const config = require("../config");
 
-module.exports = (app) => {
+module.exports = (app, config = {}) => {
+  const secret = process.env.SESSION_SECRET || config.secret || "default_session_secret";
+
   app.use(
     session({
-      secret: config.session.secret,
+      secret,
       resave: false,
-      saveUninitialized: false,
+      saveUninitialized: true,
       cookie: {
-        secure: config.session.cookie.secure, 
-        httpOnly: config.session.cookie.httpOnly,
-        maxAge: 1000 * 60 * 60,
+        secure: config.secure || false,
+        httpOnly: config.httpOnly !== undefined ? config.httpOnly : true,
       },
     })
   );
 
-  console.log("Secure Session Cookies enabled");
+  console.log("Session enabled:", `secure=${config.secure}, httpOnly=${config.httpOnly}`);
 };

@@ -1,7 +1,6 @@
-# express-x
+# express-secure-x
 
-A plug-and-play **security middleware package** for Node.js + Express REST APIs.  
-Protect your app with **JWT authentication, Helmet, CSRF protection, Rate Limiting, Secure Cookies, File Uploads, Logging, and more** — all configurable via CLI or JSON.
+A plug-and-play security middleware package for Node.js + Express REST APIs. Protect your app with JWT authentication, Helmet, CSRF protection, Rate Limiting, Secure Cookies, File Uploads, Logging, and more — all configurable via CLI or JSON.
 
 ---
 
@@ -24,13 +23,13 @@ Protect your app with **JWT authentication, Helmet, CSRF protection, Rate Limiti
 ## Installation
 
 ```bash
-npm install express-x
+npm install express-secure-x
 ```
 
 Or with yarn:
 
 ```bash
-yarn add express-x
+yarn add express-secure-x
 ```
 
 ---
@@ -39,11 +38,11 @@ yarn add express-x
 
 ```js
 const express = require("express");
-const secure = require("express-x");
+const secure = require("express-secure-x");
 
 const app = express();
 
-// Apply selected security features
+// Apply security features (auto-configured from JSON if present)
 secure(app);
 
 app.get("/", (req, res) => res.send("Hello Secure API"));
@@ -53,12 +52,16 @@ app.listen(3000, () => console.log("Server running on http://localhost:3000"));
 
 ---
 
-## CLI Setup
+## Configuration
 
-Run the initializer to configure security features interactively:
+You can configure `express-secure-x` either via a CLI or a JSON file (`express-secure-x.json`) in your project root.
+
+### CLI Setup
+
+Run the initializer:
 
 ```bash
-npx express-x init
+npx express-secure-x init
 ```
 
 The CLI will ask questions like:
@@ -72,7 +75,7 @@ Enable Secure Cookies? (y/n)
 Enable File Uploads? (y/n)
 ```
 
-A `.secure-config.json` file will be generated in your project root:
+This generates an `express-secure-x.json`:
 
 ```json
 {
@@ -80,18 +83,32 @@ A `.secure-config.json` file will be generated in your project root:
   "jwt": true,
   "rateLimit": true,
   "csrf": false,
-  "cookies": true,
-  "uploads": true,
-  "cors": ["https://example.com"]
+  "session": true,
+  "inputValidation": true,
+  "logger": true,
+  "cors": ["http://localhost:3000"]
 }
 ```
+
+### Default Settings (can be overridden)
+
+- **Helmet:** `true`  
+- **JWT:** `true`  
+- **Rate Limiting:** `windowMs: 900000, max: 100`  
+- **CSRF:** `true`  
+- **Session:** `secure: NODE_ENV==='production', httpOnly: true`  
+- **Input Validation:** `true`  
+- **Logger:** `true`  
+- **CORS:** `['http://localhost:3000']`
+
+You can pass a custom config object when calling `secure(app, userConfig)` to override defaults or JSON settings.
 
 ---
 
 ## JWT Example
 
 ```js
-const { generateToken, verifyToken } = require("express-x/jwt");
+const { generateToken, verifyToken } = require("express-secure-x/jwt");
 
 // Generate token
 const token = generateToken({ userId: 123 });
@@ -106,7 +123,7 @@ console.log(payload); // { userId: 123 }
 ## Rate Limiting Example
 
 ```js
-const { rateLimiter } = require("express-x/middlewares");
+const { rateLimiter } = require("express-secure-x/middlewares");
 
 app.use(rateLimiter); // defaults: 100 requests per 15 min
 ```
@@ -121,7 +138,12 @@ Set these in your `.env`:
 PORT=3000
 JWT_SECRET=supersecretkey
 SESSION_SECRET=anothersecret
+CORS_ORIGINS=http://localhost:3000
 NODE_ENV=production
+RATE_LIMIT_WINDOW_MS=900000
+RATE_LIMIT_MAX=100
+LOG_LEVEL=info
+JWT_EXPIRES_IN=1h
 ```
 
 ---
@@ -146,11 +168,10 @@ MIT © [Subhranshu Sahoo](https://github.com/subhranshus-mindfire)
 
 ## Contributing
 
-Pull requests are welcome.  
-For major changes, please open an issue first to discuss what you’d like to change.  
+Pull requests are welcome. For major changes, please open an issue first to discuss what you’d like to change.
 
 ---
 
 ## Support
 
-If you find this project useful, consider giving it a **star on GitHub**.
+If you find this project useful, consider giving it a star on GitHub.

@@ -1,24 +1,35 @@
 const fs = require("fs");
 const path = require("path");
 
-module.exports = function secureExpress(app) {
-  const configPath = path.join(process.cwd(), "express-x.json");
+const helmetMiddleware = require("./middlewares/helmet");
+const corsMiddleware = require("./middlewares/cors");
+const rateLimitMiddleware = require("./middlewares/rateLimit");
+const sessionMiddleware = require("./middlewares/session");
+const inputValidationMiddleware = require("./middlewares/inputValidation");
+const jwtMiddleware = require("./middlewares/jwt");
+const loggerMiddleware = require("./middlewares/logger");
+const csrfMiddleware = require("./middlewares/csrf");
 
-  if (!fs.existsSync(configPath)) {
-    console.warn("No express-x.json found. Run `npx express-x` first.");
-    return;
+module.exports = (app, userConfig = {}) => {
+  const configPath = path.join(process.cwd(), "express-secure-x.json");
+  let config = userConfig;
+
+  if (fs.existsSync(configPath)) {
+    try {
+      const fileConfig = JSON.parse(fs.readFileSync(configPath, "utf-8"));
+      config = { ...config, ...fileConfig };
+    } catch (err) {
+      console.error("Error reading express-secure-x.json", err);
+    }
   }
 
-  const config = require(configPath);
+  if (config.helmet) helmetMiddleware(app, config.helmetConfig);
+  if (config.cors) corsMiddleware(app, config.cors);
+  if (config.rateLimit) rateLimitMiddleware(app, config.rateLimit);
+  if (config.session) sessionMiddleware(app, config.session);
+  if (config.inputValidation) inputValidationMiddleware(app);
+  if (config.logger) loggerMiddleware(app);
+  if (config.csrf) csrfMiddleware(app);
 
-  if (config.helmet) require("./middlewares/helmet")(app);
-  if (config.rateLimit) require("./middlewares/rateLimit")(app);
-  if (config.csrf) require("./middlewares/csrf")(app);
-  if (config.cors) require("./middlewares/cors")(app);
-  if (config.jwt) require("./middlewares/jwt")(app);
-  if (config.inputValidation) require("./middlewares/inputValidation")(app);
-  if (config.logger) require("./middlewares/logger")(app);
-  if (config.session) require("./middlewares/session")(app);
-
-  require("./middlewares/errorHandler")(app);
+  app.jwt = jwtMiddleware;
 };

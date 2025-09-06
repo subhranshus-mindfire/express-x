@@ -1,12 +1,12 @@
 const rateLimit = require("express-rate-limit");
 
-module.exports = (app) => {
+module.exports = (app, config = {}) => {
   const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000,
-    max: 100,
-    standardHeaders: true,
-    legacyHeaders: false,
+    windowMs: (config.windowMs || 15) * 60 * 1000,
+    max: config.max || 100,
+    message: config.message || "Too many requests, please try again later.",
   });
+
   app.use(limiter);
-  console.log("⚡ Rate Limiting enabled");
+  console.log(`Rate Limiting enabled: ${limiter.max} requests per ${limiter.windowMs/60000} minutes`);
 };
