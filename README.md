@@ -79,13 +79,36 @@ This generates an `express-secure-x.json`:
 ```json
 {
   "helmet": true,
-  "jwt": true,
-  "rateLimit": true,
-  "csrf": false,
-  "session": true,
+  "rateLimit": {
+    "windowMs": 900000,
+    "max": 100
+  },
+  "csrf": true,
+  "cors": {
+    "origin": "*"
+  },
+  "jwt": {
+    "secret": "default_secret",
+    "expiresIn": "1h"
+  },
   "inputValidation": true,
   "logger": true,
-  "cors": ["http://localhost:3000"]
+  "session": {
+    "secret": "default_session_secret",
+    "cookie": {
+      "secure": false,
+      "httpOnly": true
+    }
+  },
+  "uploads": {
+    "maxSize": 1000000,
+    "allowedTypes": [
+      "jpg",
+      "jpeg",
+      "png",
+      "gif"
+    ]
+  }
 }
 ```
 
