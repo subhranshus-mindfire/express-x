@@ -14,6 +14,4 @@ module.exports = (app, config = {}) => {
       },
     })
   );
-
-  console.log("Session enabled:", `secure=${config.secure}, httpOnly=${config.httpOnly}`);
 };
